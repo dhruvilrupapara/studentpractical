@@ -81,7 +81,7 @@ public class StudentController {
 			String date =httpServletRequest.getParameter("birthdate");
 			Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(date); 
 		
-			Student addstu = new Student();
+			Student addstu = studentServices.findbyId(Long.parseLong(httpServletRequest.getParameter("id")));
 			addstu.setFirstname(httpServletRequest.getParameter("firstname"));
 			addstu.setLastname(httpServletRequest.getParameter("lastname"));
 			addstu.setMobileno(httpServletRequest.getParameter("mobileno"));
