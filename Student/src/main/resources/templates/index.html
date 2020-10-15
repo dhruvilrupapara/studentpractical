@@ -50,7 +50,7 @@ error : function(error) {
 
 function update(id) {
 			$(".error").html("");
-
+document.getElementById("updateform").reset(); 
 		$.ajax({
 					type : 'GET',
 					url : '/showupdate/' + id,
@@ -94,7 +94,7 @@ function update(id) {
 function add() {
 	
 		$(".error").html("");
-
+document.getElementById("addstudent").reset(); 
 		$.ajax({
 					type : 'POST',
 					url : 'register',
@@ -301,7 +301,7 @@ $(document).ready(function() {
                     </div>
                 </div>
             </form>
-            <button type="button" class="btn btn-primary btn-block"  data-dismiss="modal" onclick="upd();">Register</button>
+            <button type="button" class="btn btn-primary btn-block"  data-dismiss="modal" onclick="upd();">Update</button>
         </div>
         
         <!-- Modal footer -->
