@@ -94,19 +94,32 @@ document.getElementById("updateform").reset();
 function add() {
 	
 		$(".error").html("");
-document.getElementById("addstudent").reset(); 
+
 		$.ajax({
 					type : 'POST',
 					url : 'register',
 					data : $('#addstudent').serialize(),
 					success : function(response)
 					 {
-					
-						
+						$("#example tr").remove();
+						var jsn = JSON.parse(response);
+					    jsn.forEach(function(data) {
+					    	 var newTr = "<tr>";
+					    	 newTr += "<td>" + data.firstname + "</td>";
+					    	 newTr += "<td>" + data.lastname + "</td>";
+					    	 newTr += "<td>" + data.birthdate + "</td>";
+					    	 newTr += "<td>" + data.mobileno + "</td>";
+					    	  newTr += "<td>" + "<button class=\"btn btn-primary a-btn-slide-text\" data-toggle=\"modal\" data-target=\"#update\" onclick=\"javascript:update("+data.id+");\"> Update </button>" + "</td>";
+					    	 newTr += "<td>" + "<button class=\"btn btn-primary a-btn-slide-text\"  onclick=\"javascript:delet("+data.id+");\"> Delete </button>" + "</td>";
+					    	 newTr += "</tr>";
+					    	 
+					    	
+					    	 $("#example").append(newTr);
+					      console.log(newTr);
+					    });
 						console.log(response);
-						
+						document.getElementById("addstudent").reset(); 
 						//var table = document.getElementById ("example");
-						 $("#example").refresh ();
 						
 					},
 					error : function(error) {
@@ -118,11 +131,29 @@ function delet(id){
     $.ajax({
         url: '/delete/' + id,
         method: 'GET',
-        success: function () {
-            alert('record has been deleted');
-            $("#example").refresh ();
-            
-            	                },
+        data : {},
+		contentType : "application/json",
+        success: function (response)
+     {
+						$("#example tr").remove();
+						var jsn = JSON.parse(response);
+					    jsn.forEach(function(data) {
+					    	 var newTr = "<tr>";
+					    	 newTr += "<td>" + data.firstname + "</td>";
+					    	 newTr += "<td>" + data.lastname + "</td>";
+					    	 newTr += "<td>" + data.birthdate + "</td>";
+					    	 newTr += "<td>" + data.mobileno + "</td>";
+					    	  newTr += "<td>" + "<button class=\"btn btn-primary a-btn-slide-text\" data-toggle=\"modal\" data-target=\"#update\" onclick=\"javascript:update("+data.id+");\"> Update </button>" + "</td>";
+					    	 newTr += "<td>" + "<button class=\"btn btn-primary a-btn-slide-text\"  onclick=\"javascript:delet("+data.id+");\"> Delete </button>" + "</td>";
+					    	 newTr += "</tr>";
+					    	 
+					    	
+					    	 $("#example").append(newTr);
+					      console.log(newTr);
+					    });
+						console.log(response);
+						
+					},
         error: function (error) {
             alert(error);
         }
@@ -138,15 +169,28 @@ function upd() {
 				url : 'register',
 				data : $('#updateform').serialize(),
 				success : function(response)
-				 {
-				
-					
-					console.log(response);
-					var table = document.getElementById ("example");
-		            table.refresh ();
-					
-					
-				},
+				  {
+						$("#example tr").remove();
+						var jsn = JSON.parse(response);
+					    jsn.forEach(function(data) {
+					    	 var newTr = "<tr>";
+					    	 newTr += "<td>" + data.firstname + "</td>";
+					    	 newTr += "<td>" + data.lastname + "</td>";
+					    	 newTr += "<td>" + data.birthdate + "</td>";
+					    	 newTr += "<td>" + data.mobileno + "</td>";
+					    	  newTr += "<td>" + "<button class=\"btn btn-primary a-btn-slide-text\" data-toggle=\"modal\" data-target=\"#update\" onclick=\"javascript:update("+data.id+");\"> Update </button>" + "</td>";
+					    	 newTr += "<td>" + "<button class=\"btn btn-primary a-btn-slide-text\"  onclick=\"javascript:delet("+data.id+");\"> Delete </button>" + "</td>";
+					    	 newTr += "</tr>";
+					    	 
+					    	
+					    	 $("#example").append(newTr);
+					      console.log(newTr);
+					    });
+						console.log(response);
+						document.getElementById("updateform").reset(); 
+						//var table = document.getElementById ("example");
+						
+					},
 				error : function(error) {
 					alert("error in update:" + error);
 				}
@@ -265,7 +309,7 @@ $(document).ready(function() {
         
         <!-- Modal body -->
         <div class="modal-body">
-          <form class="form-horizontal"  id ="updateform"  th:object="${student}" >
+          <form class="form-horizontal"  id ="updateform" name ="updateform" th:object="${student}" >
                <div class="col-sm-9">
                         <input type="hidden"th:field="*{id}" id="id">
                     </div>
@@ -291,7 +335,7 @@ $(document).ready(function() {
                 <div class="form-group">
                     <label for="birthDate" class="col-sm-3 control-label">Date of Birth*</label>
                     <div class="col-sm-9">
-                        <input type="text" th:field="*{birthdate}" id="birthdate" class="form-control">
+                        <input type="text" th:field="*{birthdate}" id="birthdate" name="birthdate"  class="form-control">
                     </div>
                 </div>
             
